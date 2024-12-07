@@ -1,5 +1,6 @@
 ```markdown
 # **C 언어 소스 코드 취약점 탐지 (CNN 기반) - Artificial Intelligence C language Vulnerability**
+```
 
 이 프로젝트는 C 언어 소스 코드의 취약점을 탐지하고 수정 권장 사항을 제공하기 위한 엔드-투-엔드 솔루션을 제공합니다. 소스 코드를 토큰화하고, CNN(Convolutional Neural Network) 모델을 학습시키며, 탐지된 취약점에 대한 수정을 제안합니다.
 
