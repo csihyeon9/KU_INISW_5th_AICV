@@ -36,6 +36,7 @@ AICV/
 │   ├── visualization.py           # 학습 결과 시각화 스크립트
 ├── README.md                      # 프로젝트 문서
 ```
+---
 ## **프로젝트 결과물**
 
 ```bash
