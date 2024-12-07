@@ -15,7 +15,7 @@
 ## **프로젝트 구조**
 
 ```plaintext
-AISS/
+AICV/
 ├── data/                          # HDF5 데이터 파일 디렉토리
 │   ├── VDISC_train.hdf5           # 학습 데이터 (https://osf.io/d45bw/)
 │   ├── VDISC_validate.hdf5        # 검증 데이터 (https://osf.io/d45bw/)
