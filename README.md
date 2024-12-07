@@ -163,18 +163,6 @@ python src/detect_and_fix.py
 
 ---
 
-### **6. 학습 결과 시각화 스크립트 (`visualization.py`)**
-
-#### 실행:
-```bash
-python src/visualization.py
-```
-
-#### 주요 기능:
-- TensorBoard 로그 데이터를 기반으로 학습/검증 손실 및 정확도를 시각화.
-- 학습 과정에서 모델이 어떻게 개선되었는지 확인 가능.
-
----
 
 ## **확장 가능성**
 
