@@ -20,7 +20,6 @@ AICV/
 │   ├── VDISC_train.hdf5           # 학습 데이터 (https://osf.io/d45bw/)
 │   ├── VDISC_validate.hdf5        # 검증 데이터 (https://osf.io/d45bw/)
 │   ├── VDISC_test.hdf5            # 테스트 데이터 (https://osf.io/d45bw/)
-├── logs/                          # TensorBoard 로그 디렉토리
 ├── saved_models/                  # 모델 가중치 저장 디렉토리
 │   └── model.weights.h5           # 최적 모델 가중치
 ├── example.c/                     # 분석 대상 C 코드 디렉토리
