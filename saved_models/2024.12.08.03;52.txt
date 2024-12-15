@@ -1,0 +1,62 @@
+(myenv2) PS C:\AISS\src> python.exe .\train.py
+Using GPU: PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')
+2024-12-08 01:08:11.935949: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-12-08 01:08:12.559066: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1616] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 4632 MB memory:  -> device: 0, name: GeForce GTX 1060, pci bus id: 0000:01:00.0, compute capability: 6.1
+Epoch 1/20
+2024-12-08 01:08:23.260413: I tensorflow/stream_executor/cuda/cuda_dnn.cc:384] Loaded cuDNN version 8101
+7965/7965 [==============================] - 430s 51ms/step - loss: 0.5336 - accuracy: 0.8995 - val_loss: 0.2630 - val_accuracy: 0.8927
+Epoch 2/20
+7965/7965 [==============================] - 448s 56ms/step - loss: 0.5012 - accuracy: 0.9049 - val_loss: 0.2525 - val_accuracy: 0.9065
+Epoch 3/20
+7965/7965 [==============================] - 469s 59ms/step - loss: 0.4844 - accuracy: 0.9098 - val_loss: 0.2373 - val_accuracy: 0.9060
+Epoch 4/20
+7965/7965 [==============================] - 508s 64ms/step - loss: 0.4645 - accuracy: 0.9064 - val_loss: 0.2577 - val_accuracy: 0.9168
+Epoch 5/20
+7965/7965 [==============================] - 494s 62ms/step - loss: 0.4515 - accuracy: 0.9002 - val_loss: 0.2801 - val_accuracy: 0.8942
+Epoch 6/20
+7965/7965 [==============================] - 478s 60ms/step - loss: 0.4432 - accuracy: 0.8901 - val_loss: 0.2625 - val_accuracy: 0.8858
+Epoch 7/20
+7965/7965 [==============================] - 509s 64ms/step - loss: 0.4354 - accuracy: 0.8855 - val_loss: 0.2528 - val_accuracy: 0.8930
+Epoch 8/20
+7965/7965 [==============================] - 508s 64ms/step - loss: 0.4263 - accuracy: 0.8822 - val_loss: 0.2738 - val_accuracy: 0.8926
+Epoch 9/20
+7965/7965 [==============================] - 509s 64ms/step - loss: 0.4237 - accuracy: 0.8802 - val_loss: 0.2799 - val_accuracy: 0.8934
+Epoch 10/20
+7965/7965 [==============================] - 534s 67ms/step - loss: 0.4198 - accuracy: 0.8785 - val_loss: 0.2792 - val_accuracy: 0.8836
+Epoch 11/20
+7965/7965 [==============================] - 525s 66ms/step - loss: 0.4157 - accuracy: 0.8773 - val_loss: 0.3012 - val_accuracy: 0.8875
+Epoch 12/20
+7965/7965 [==============================] - 473s 59ms/step - loss: 0.4137 - accuracy: 0.8763 - val_loss: 0.3241 - val_accuracy: 0.8579
+Epoch 13/20
+7965/7965 [==============================] - 508s 64ms/step - loss: 0.4124 - accuracy: 0.8765 - val_loss: 0.3041 - val_accuracy: 0.8976
+Epoch 14/20
+7965/7965 [==============================] - 547s 69ms/step - loss: 0.4121 - accuracy: 0.8742 - val_loss: 0.3607 - val_accuracy: 0.8527
+Epoch 15/20
+7965/7965 [==============================] - 499s 63ms/step - loss: 0.4059 - accuracy: 0.8732 - val_loss: 0.3848 - val_accuracy: 0.8595
+Epoch 16/20
+7965/7965 [==============================] - 479s 60ms/step - loss: 0.4028 - accuracy: 0.8736 - val_loss: 0.3960 - val_accuracy: 0.8694
+Epoch 17/20
+7965/7965 [==============================] - 452s 57ms/step - loss: 0.4004 - accuracy: 0.8737 - val_loss: 0.4053 - val_accuracy: 0.8663
+Epoch 18/20
+7965/7965 [==============================] - 454s 57ms/step - loss: 0.4083 - accuracy: 0.8706 - val_loss: 0.4021 - val_accuracy: 0.8562
+Epoch 19/20
+7965/7965 [==============================] - 455s 57ms/step - loss: 0.4015 - accuracy: 0.8716 - val_loss: 0.4288 - val_accuracy: 0.8753
+Epoch 20/20
+7965/7965 [==============================] - 470s 59ms/step - loss: 0.4001 - accuracy: 0.8713 - val_loss: 0.4065 - val_accuracy: 0.8712
+
+
+___
+
+(myenv2) PS C:\AISS\src> python.exe .\detect_and_fix.py
+2024-12-08 03:58:51.666900: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-12-08 03:58:52.568734: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1616] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 4632 MB memory:  -> device: 0, name: GeForce GTX 1060, pci bus id: 0000:01:00.0, compute capability: 6.1
+
+분석 중: C:\AISS\example.c\example.c
+2024-12-08 03:58:53.882999: I tensorflow/stream_executor/cuda/cuda_dnn.cc:384] Loaded cuDNN version 8101
+1/1 [==============================] - 2s 2s/step
+  🔍 예측 확률: 0.20407727360725403
+  ⚠️ 취약점이 발견되었습니다:
+  - CWE: CWE-120
+    권장 수정 사항: 버퍼 오버플로를 방지하려면 strcpy 대신 strncpy 또는 snprintf를 사용하세요.
