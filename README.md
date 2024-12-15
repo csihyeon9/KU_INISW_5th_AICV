@@ -1,4 +1,5 @@
-# **C 언어 소스 코드 취약점 탐지 (CNN 기반) - Artificial Intelligence C language Vulnerability**
+```markdown
+# **C 언어 소스 코드 취약점 탐지 (CNN 기반) - Artificial Intelligence C Language Vulnerability**
 
 이 프로젝트는 C 언어 소스 코드의 취약점을 탐지하고 수정 권장 사항을 제공하기 위한 엔드-투-엔드 솔루션을 제공합니다. 소스 코드를 토큰화하고, CNN(Convolutional Neural Network) 모델을 학습시키며, 탐지된 취약점에 대한 수정을 제안합니다.
 
@@ -36,7 +37,9 @@ AICV/
 │   ├── visualization.py           # 학습 결과 시각화 스크립트
 ├── README.md                      # 프로젝트 문서
 ```
+
 ---
+
 ## **프로젝트 결과물**
 
 ```bash
@@ -57,7 +60,6 @@ Epoch 20/20
   - CWE: CWE-120
     권장 수정 사항: 버퍼 오버플로를 방지하려면 strcpy 대신 strncpy 또는 snprintf를 사용하세요.
 ```
-
 ---
 
 ## **설치**
@@ -66,8 +68,8 @@ Epoch 20/20
 
 - Python 3.8
 - TensorFlow 2.11
-- CUDA 11.2 (GPU를 사용할 경우 cuDNN 8.1 필요)
-- 필수 Python 라이브러리 설치:
+- CUDA 11.2 및 cuDNN 8.1 (GPU 사용 시)
+- 필수 라이브러리 설치:
   ```bash
   pip install tensorflow==2.11.* pandas scikit-learn matplotlib h5py
   ```
@@ -76,8 +78,8 @@ Epoch 20/20
 
 1. 가상환경 생성:
    ```bash
-   py -3.8 -m venv ./venv
-   source venv/bin/activate  # Windows: venv\Scripts\activate
+   python -m venv myenv
+   source myenv/bin/activate  # Windows: myenv\Scripts\activate
    ```
 
 2. 필수 라이브러리 설치:
@@ -86,25 +88,19 @@ Epoch 20/20
    ```
 
 3. GPU 지원 확인:
-   - CUDA와 cuDNN이 제대로 설치되었는지 확인한 뒤, GPU를 사용 가능한지 테스트:
-     ```bash
-     python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
-     ```
+   ```bash
+   python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+   ```
 
 ---
 
 ## **데이터셋 설명**
 
-데이터셋은 C/C++ 함수 수준의 코드 예제와 취약점 레이블을 포함한 HDF5 파일로 제공됩니다. 각 파일에는 다음과 같은 데이터가 포함됩니다:
-
-1. **`functionSource`**: C 코드 함수의 소스 문자열.
-2. **`CWE-120`, `CWE-119`, `CWE-469`, `CWE-476`, `CWE-other`**: 취약점 유형에 대한 바이너리 레이블 (1: 취약, 0: 안전).
-3. **`combine`**: 모든 CWE에 대해 OR 연산을 수행한 결과로, 이진 분류 학습을 위한 목표 변수입니다.
-
-데이터셋 파일:
-- `VDISC_train.hdf5`: 학습 데이터.
-- `VDISC_validate.hdf5`: 검증 데이터.
-- `VDISC_test.hdf5`: 테스트 데이터.
+### 데이터셋의 구성
+데이터셋은 오픈 소스 소프트웨어에서 채굴된 약 127만 개의 함수로 구성된 소스 코드와 레이블 데이터입니다. 데이터셋은 다음과 같은 정보를 포함합니다:
+1. **functionSource**: 함수 수준의 소스 코드 문자열.
+2. **CWE-120, CWE-119, CWE-469, CWE-476, CWE-other**: CWE별 취약점 여부 (1: 취약, 0: 안전).
+3. **combine**: 모든 CWE에 대해 OR 연산한 결과값으로, 이진 분류 학습의 목표값입니다.
 
 ---
 
@@ -113,88 +109,55 @@ Epoch 20/20
 ### **1. 데이터 전처리 (`preprocess.py`)**
 
 #### 주요 기능:
-- **`load_data(file_path)`**: HDF5 파일에서 데이터를 로드하여 pandas DataFrame으로 변환.
-- **`create_combine_label(data)`**: CWE 레이블을 OR 연산으로 결합하여 `combine` 컬럼 생성 (이진 분류용).
-- **`tokenize_data(tokenizer, data, input_size)`**: 소스 코드를 토큰화하고 패딩 처리.
+1. **`load_data(file_path)`**: HDF5 데이터를 pandas DataFrame으로 로드.
+2. **`create_combine_label(data)`**: CWE 레이블을 OR 연산하여 `combine` 컬럼 생성.
+3. **`tokenize_data(tokenizer, data, input_size)`**: 코드를 토큰화하고 고정 크기로 패딩.
 
 ---
 
 ### **2. CNN 모델 정의 (`model.py`)**
 
 #### 모델 구조:
-- **Embedding 레이어**: 토큰을 고정된 크기의 벡터로 매핑.
-- **Conv1D 레이어**: 토큰 시퀀스에서 지역 패턴을 학습.
-- **MaxPooling 레이어**: 차원 축소와 중요한 패턴 캡처.
-- **Dense 레이어**: 완전 연결 레이어로 이진 분류 수행.
+- **Embedding 레이어**: 입력을 고정된 차원의 벡터로 매핑.
+- **Conv1D 레이어**: 지역적 관계를 학습.
+- **MaxPooling 레이어**: 차원 축소 및 중요 특징 캡처.
+- **Dense 레이어**: 최종 이진 분류 수행.
 
 ---
 
 ### **3. 학습 스크립트 (`train.py`)**
 
-#### 실행:
-```bash
-python src/train.py
-```
-
 #### 주요 기능:
-1. 학습 및 검증 데이터 로드.
-2. Keras 토크나이저로 소스 코드 토큰화.
-3. CNN 모델 학습.
-4. 최적의 모델 가중치를 `model.weights.h5`로 저장.
-
-#### 학습 결과 지표:
-- **Loss**: 학습 데이터의 손실 값.
-- **Accuracy**: 학습 데이터의 정확도.
-- **Val_loss**: 검증 데이터의 손실 값.
-- **Val_accuracy**: 검증 데이터의 정확도.
-
-#### 지표의 의미:
-- **Loss/Val_loss**: 손실 값은 모델 예측과 실제 값 간의 차이를 수치화. 검증 손실은 모델이 학습 데이터 외부에서도 잘 동작하는지 평가.
-- **Accuracy/Val_accuracy**: 정확도는 올바른 예측 비율을 나타내며, 검증 정확도는 일반화 성능을 나타냄.
+- 데이터 로드 및 전처리.
+- 모델 학습 및 가중치 저장.
 
 ---
 
 ### **4. 평가 스크립트 (`evaluate.py`)**
 
-#### 실행:
-```bash
-python src/evaluate.py
-```
-
 #### 주요 기능:
-- 테스트 데이터 로드 및 전처리.
-- 학습된 모델 가중치를 로드(`model.weights.h5`).
-- 모델 성능 평가:
-  - 정확도 출력.
-  - 혼동 행렬 및 분류 보고서 생성.
+- 학습된 모델 성능 평가 (정확도, 혼동 행렬 등).
 
 ---
 
-### **5. 코드 분석 및 수정 권장 스크립트 (`detect_and_fix.py`)**
-
-#### 실행:
-```bash
-python src/detect_and_fix.py
-```
+### **5. 코드 분석 및 수정 권장 (`detect_and_fix.py`)**
 
 #### 주요 기능:
-1. `example.c/` 디렉토리 내의 모든 `.c` 파일을 자동으로 분석.
-2. C 코드의 **주석 제거** 후 코드 내용을 분석하여 취약점 탐지.
-3. 탐지된 CWE에 대해 수정 권장 사항 출력.
+- C 코드 파일 분석 및 취약점 탐지.
+- CWE에 대한 수정 권장 사항 출력.
 
 ---
-
 
 ## **확장 가능성**
 
-1. **성능 최적화**:
-   - 더 많은 학습 데이터 사용.
-   - 모델 구조 개선 (예: RNN 추가, 더 깊은 CNN).
-
-2. **다중 레이블 분류**:
-   - CWE별 다중 레이블 분류로 확장 가능.
-
-3. **추가 평가 지표**:
-   - Precision-Recall AUC, ROC AUC 분석 포함.
+1. **다중 레이블 분류로 확장 가능**:
+   - CWE별 상세 취약점 분류.
+2. **정적 분석 도구와의 통합**:
+   - IDE 플러그인으로 개발 가능.
+3. **모델 구조 최적화**:
+   - 더 깊은 네트워크 또는 Transformer 기반 구조로 확장.
 
 ---
+
+이 프로젝트는 효율적이고 실질적인 취약점 탐지를 목표로 설계되었습니다. 더 나은 보안성을 위해 새로운 기능이나 개선 사항이 필요하다면 언제든지 기여를 환영합니다! 😊
+```
